@@ -1,17 +1,27 @@
 {
     "name": "mechastorm/google-spreadsheet-extractor",
     "require": {
-        "google/google-api-php-client": "dev-master"
+        "google/google-api-php-client": "master"
     },
     "require-dev": {
-        "google/google-api-php-client": "dev-master",
+        "google/google-api-php-client": "master",
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
-	"repositories": [
+    "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/google/google-api-php-client"
+            "type": "package",
+            "package": {
+                "name": "google/google-api-php-client",
+                "version": "master",
+                "dist": {
+                    "url": "https://github.com/google/google-api-php-client",
+                    "type": "vcs"
+                },
+                "autoload": {
+                    "classmap": ["src/"]
+                }
+            }
         }
     ],
     "autoload": {
