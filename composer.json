@@ -1,7 +1,7 @@
 {
     "name": "mechastorm/google-spreadsheet-extractor",
     "require": {
-        "google/google-api-php-client": "dev-master",
+        "google/google-api-php-client": "dev-master"
     },
     "require-dev": {
         "google/google-api-php-client": "dev-master",
