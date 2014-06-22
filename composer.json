@@ -11,7 +11,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/google/google-api-php-client"
+            "url": "https://github.com/google/google-api-php-client.git"
         }
     ],
     "autoload": {
