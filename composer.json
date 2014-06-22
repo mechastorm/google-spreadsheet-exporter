@@ -8,20 +8,12 @@
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
-    "repositories": [
-	    {
-	        "type": "package",
-	        "package": {
-	            "name": "google/google-api-php-client",
-	            "version": "dev-master",
-	            "source": {
-	                "url": "https://github.com/google/google-api-php-client.git",
-	                "type": "git",
-	                "reference": "master"
-	            }
-	        }
-	    }
-	],
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/google/google-api-php-client"
+        }
+    ],
     "autoload": {
         "psr-0" : {
             "mechastorm\\google-spreadsheet-extractor" : "src"
