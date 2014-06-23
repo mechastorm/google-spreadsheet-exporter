@@ -1,10 +1,10 @@
 {
     "name": "mechastorm/google-spreadsheet-extractor",
     "require": {
-        "google/apiclient": "1.0.*"
+        "google/apiclient": "1.0.*@beta"
     },
     "require-dev": {
-        "google/apiclient": "1.0.*",
+        "google/apiclient": "1.0.*@beta",
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
@@ -12,6 +12,7 @@
         "psr-0" : {
             "mechastorm\\google-spreadsheet-extractor" : "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
 
