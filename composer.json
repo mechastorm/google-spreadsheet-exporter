@@ -8,7 +8,6 @@
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
-    "minimum-stability" : "dev",
     "repositories": [
         {
             "type": "vcs",
