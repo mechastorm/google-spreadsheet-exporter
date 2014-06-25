@@ -17,9 +17,14 @@ The original library heavily used [Zend_Gdata](https://github.com/zendframework/
 
 I wanted to use the Google Spreadsheet primarily for copy management and translations but had to use the newer Google APIs.
 
-# Code Example
+# Todo
 
-Coming Soon!
+- Finalize codebase via usage on a Laravel Application
+- Documentaion
+    - How to setup Google API credentials
+    - Usage
+    - Contributing
+- PhpUnit Tests
 
 # Installation
 
