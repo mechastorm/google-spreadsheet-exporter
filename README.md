@@ -37,7 +37,7 @@ Create a composer.json file in your project and add the following:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/mechastorm/google-spreadsheet-extractor"
+            "url": "https://github.com/mechastorm/google-spreadsheet-exporter.git"
         }
     ],
     "require": {
