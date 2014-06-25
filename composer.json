@@ -1,13 +1,21 @@
 {
     "name": "mechastorm/google-spreadsheet-extractor",
     "require": {
-        "google/apiclient": "1.0.*@beta"
+        "google/apiclient": "1.0.*@beta",
+        "asimlqt/php-google-spreadsheet-client": "2.1.*"
     },
     "require-dev": {
         "google/apiclient": "1.0.*@beta",
+        "asimlqt/php-google-spreadsheet-client": "2.1.*",
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/asimlqt/php-google-spreadsheet-client"
+        }
+    ],
     "autoload": {
         "psr-0" : {
             "mechastorm\\google-spreadsheet-extractor" : "src"

@@ -1,5 +1,8 @@
 vendor
+output
+examples/*.test.php
 .idea
 *.phar
+*privatekey.p12
 composer.lock
 composer.phar
