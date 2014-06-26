@@ -27,7 +27,9 @@
         "mockery/mockery": "~0.9"
     },
     "autoload": {
-        "psr-4": {"Google\\": "src/Google"}
+        "psr-0": {
+			"Mechastorm\\Googler": "src/"
+        }
     },
     "minimum-stability": "dev"
 }
