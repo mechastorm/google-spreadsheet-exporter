@@ -1,12 +1,15 @@
 {
     "name": "mechastorm/google-spreadsheet-exporter",
     "description": "Libraries to deal with extracting data from a Google Spreadsheet and exporting it to another file format ",
+    "version": "1.0.0",
+    "homepage": "https://github.com/mechastorm/google-spreadsheet-exporter",
     "keywords": ["localization", "google", "spreadsheet", "php"],
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Shih Oon Liong",
-            "email": "github@mechaloid.com"
+            "email": "github@mechaloid.com",
+            "role": "Developer"
         }
     ],
     "repositories": [

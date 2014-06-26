@@ -32,9 +32,9 @@ I wanted to use the Google Spreadsheet primarily for copy management and transla
 
 # Todo
 
-- Documentaion
-    - Contributing
 - PhpUnit Tests
+- Documentation
+    - Contributing
 
 # Setup & Installation
 
