@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-			"Mechastorm\\Googler": "src/"
+			"Mechastorm\\Google": "src/"
         }
     },
     "minimum-stability": "dev"
