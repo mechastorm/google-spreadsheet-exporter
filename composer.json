@@ -18,7 +18,7 @@
     ],
     "autoload": {
         "psr-0" : {
-            "mechastorm\\google-spreadsheet-extractor" : "src"
+            "mechastorm\\google-spreadsheet-exporter" : "src"
         }
     },
     "minimum-stability": "dev"
