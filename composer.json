@@ -27,9 +27,7 @@
         "mockery/mockery": "~0.9"
     },
     "autoload": {
-        "psr-0" : {
-            "mechastorm\\google-spreadsheet-exporter" : "src"
-        }
+        "psr-4": {"Google\\": "src/Google"}
     },
     "minimum-stability": "dev"
 }
