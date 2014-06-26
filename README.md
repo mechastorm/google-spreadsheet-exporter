@@ -8,7 +8,7 @@ The libraries help with
 
 - Read content from a Google Spreadsheet via a [service account](https://developers.google.com/drive/web/service-accounts)
 - Transform that data. Currently only format is a hierarchical php array
-- Writes that data into a file format. Currently supports a simple PHP file
+- Writes that data into a file format. Currently supports a simple PHP file. Sample outputs can be seen at `examples/sample_ouput`
 
 # Framework Integrations
 
@@ -38,7 +38,7 @@ I wanted to use the Google Spreadsheet primarily for copy management and transla
 
 # Setup & Installation
 
-## Get Your Google API Credentials
+## Step 1. Get Your Google API Credentials
 
 Go to [https://console.developers.google.com/project](https://console.developers.google.com/project) and create a new project.
 
@@ -59,7 +59,9 @@ Public key fingerprints	1234567890
 
 You will also have been prompted to download a p12 private key certificate (ie. 1234567890-privatekey.p12)
 
-## Give Spreadsheet Access
+## Step 2. Give Spreadsheet Access
+
+We assume you have already set up your spreadsheet just like the [sample](https://docs.google.com/a/mechaloid.com/spreadsheets/d/1GFQQ0clQRrYEM8_N0vyHeIIWqQdxJlbDe588uf_vlkU/edit#gid=0)
 
 __IMPORTANT__
 
@@ -137,7 +139,7 @@ $transformer = new LocalePhpArray(array(
 ));
 
 // Instantiate a write
-$outputFolder = '../output';
+$outputFolder = 'sample_output';
 $writer = new LangPhpWriter(array(
     'path' => $outputFolder,
 ));
@@ -155,9 +157,11 @@ echo "Done - please check {$outputFolder} for the files\n";
 
 ```
 
+Again sample outputs can be seen at `examples/sample_ouput`
+
 # Tests
 
-Coming Soon!
+Coming Up!
 
 # Contributors
 
