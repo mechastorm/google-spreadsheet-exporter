@@ -9,6 +9,12 @@
             "email": "github@mechaloid.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/asimlqt/php-google-spreadsheet-client"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "google/apiclient": "1.0.*@beta",
@@ -20,12 +26,6 @@
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/asimlqt/php-google-spreadsheet-client"
-        }
-    ],
     "autoload": {
         "psr-0" : {
             "mechastorm\\google-spreadsheet-exporter" : "src"
