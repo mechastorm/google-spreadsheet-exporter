@@ -2,6 +2,19 @@
 
 The main functionality of this library focuses on the reading data from a Google Spreadsheet and outputting it into a readable file. Mostly for the purpose of localization and copy management, but can also be utilized for any other cases where one needs to transform data from Google Spreadsheet into another file format.
 
+A sample of the sort spreadsheet it was made to read from can be seen [here](https://docs.google.com/a/mechaloid.com/spreadsheets/d/1GFQQ0clQRrYEM8_N0vyHeIIWqQdxJlbDe588uf_vlkU/edit#gid=0)
+
+The libraries help with
+
+- Read content from a Google Spreadsheet via a [service account](https://developers.google.com/drive/web/service-accounts)
+- Transform that data. Currently only format is a hierarchical php array
+- Writes that data into a file format. Currently supports a simple PHP file
+
+# Framework Integrations
+
+The library itself has been built to be framework agnostic (no framework dependencies). But some integration with existing framework examples
+
+- On another package that I made, [Laravel Language Google Spreadsheet Importer](https://github.com/mechastorm/laravel-lang-google-spreadsheet-importer).
 
 # Background
 
@@ -19,14 +32,42 @@ I wanted to use the Google Spreadsheet primarily for copy management and transla
 
 # Todo
 
-- Finalize codebase via usage on a Laravel Application
 - Documentaion
-    - How to setup Google API credentials
-    - Usage
     - Contributing
 - PhpUnit Tests
 
-# Installation
+# Setup & Installation
+
+## Get Your Google API Credentials
+
+Go to [https://console.developers.google.com/project](https://console.developers.google.com/project) and create a new project.
+
+Go into your project settings and click on left menu, "APIS & AUTH" > "APIS". Enable "Drive API".
+
+Then click on left menu, "APIS & AUTH" > "Credentials", and click on "Create new Client ID". Select "Service Account" and generate your client ID.
+
+![Image](docs/google_api_credentials_screen.png?raw=true)
+
+Your credentials would look something like
+
+```shell
+Client ID	            11111111111-abcdef.apps.googleusercontent.com
+Email address	        11111111111-abcdef@developer.gserviceaccount.com
+Public key fingerprints	1234567890
+
+```
+
+You will also have been prompted to download a p12 private key certificate (ie. 1234567890-privatekey.p12)
+
+## Give Spreadsheet Access
+
+__IMPORTANT__
+
+At this point, the client email address should be the on you use to share your spreadsheet with.
+
+You can give it view only access. Future updates may include updating the spreadsheet, which by that point, you will need to give edit access.
+
+## Configure Composer
 
 Installation is primary via composer.
 
@@ -38,6 +79,10 @@ Create a composer.json file in your project and add the following:
         {
             "type": "vcs",
             "url": "https://github.com/mechastorm/google-spreadsheet-exporter.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/asimlqt/php-google-spreadsheet-client"
         }
     ],
     "require": {
@@ -46,15 +91,11 @@ Create a composer.json file in your project and add the following:
 }
 ```
 
-## Getting API Access
-
-Coming Soon!
-
 ## Usage Example
 
 If you are not using a PHP Framework or one that does not support autoloading, make sure to include the autoloader from composer.
 
-A sample of this file can be seen at `examples/basic.php`
+A sample of this file can be seen at `examples/basic.php`. Let us assume you were using this [sample spreadsheet](https://docs.google.com/a/mechaloid.com/spreadsheets/d/1GFQQ0clQRrYEM8_N0vyHeIIWqQdxJlbDe588uf_vlkU/edit#gid=0)
 
 ```php
 
@@ -71,7 +112,7 @@ $authResponse = ApiHelper::getAuthByServiceAccount(
         'application_name' => 'name_of_application',
         'client_id' => 'service_account_client_id',
         'client_email' => 'service_account_client_email',
-        'key_file_location' => 'location-to-your-private-key-p12-file',
+        'key_file_location' => 'location-to-your-private-key-p12-file', // This is the location of the P12 private key file you had donwloaded
     )
 );
 $accessToken = $authResponse->access_token;
@@ -81,14 +122,17 @@ echo 'Service Account Access Token: ' . $accessToken;
 // Connect to the Google Spreadsheet
 $gSSExporter = new Exporter(array(
     'access_token' => $accessToken,
-    'spreadsheet_name' => 'name_of_spreadsheet'
+    'spreadsheet_name' => 'google-spreadsheet-exporter Sample Spreadsheet' // It must match EXACTLY the name
 ));
+$gSSExporter->setWorksheets();
 
 // Instantiate a transformer
 $transformer = new LocalePhpArray(array(
     'locales' => array(
-        'en_US', // Must match the columns on the spreadsheet
         'en_GB', // Must match the columns on the spreadsheet
+        'fr_CA',
+        'my_MY',
+        'ja_JP',
     ),
 ));
 
@@ -101,7 +145,7 @@ $writer = new LangPhpWriter(array(
 // Process the worksheets and output them to the desired format
 $gSSExporter->processWorksheets(
     array(
-        'name_of_worksheet',
+        'Web Copy', // It must match EXACTLY the name
     ),
     $transformer,
     $writer
@@ -122,7 +166,7 @@ Coming Soon!
 
 ## Credit
 
-- Iskandar Najmuddin(@iskandar) & Matthew Long (@matthewongithub) on the development of the original library.
+- Iskandar Najmuddin([@iskandar](https://github.com/iskandar)) & Matthew Long ([@matthewongithub](https://github.com/matthewongithub)) on the development of the original Kohana library that inspired this version
 
 ## License
 

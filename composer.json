@@ -1,7 +1,7 @@
 {
     "name": "mechastorm/google-spreadsheet-exporter",
-    "description": "Libaries to deal with extracting data from a Google Spreadsheet and exporting it to another file format ",
-    "keywords": ["localization", "google-spreadsheet", "php"],
+    "description": "Libraries to deal with extracting data from a Google Spreadsheet and exporting it to another file format ",
+    "keywords": ["localization", "google", "spreadsheet", "php"],
     "license": "Apache-2.0",
     "authors": [
         {
@@ -30,7 +30,6 @@
         "psr-0": {
 			"Mechastorm\\Google": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
 

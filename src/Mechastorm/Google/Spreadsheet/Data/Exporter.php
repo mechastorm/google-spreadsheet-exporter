@@ -17,7 +17,12 @@
 
 namespace Mechastorm\Google\Spreadsheet\Data;
 
+use Exception;
 use Google\Spreadsheet\ServiceRequestFactory;
+use Google\Spreadsheet\DefaultServiceRequest;
+use Google\Spreadsheet\SpreadsheetService;
+
+class ExporterException extends Exception { }
 
 /**
  * Spreadsheet Service.
@@ -29,14 +34,17 @@ use Google\Spreadsheet\ServiceRequestFactory;
 class Exporter
 {
     private
-        $defaultOptions = array(),
+        $defaultOptions = array(
+            'comment_symbol' => '#',
+        ),
         $options = array(),
-        $worksheetFeed;
+        $worksheetFeed = null;
 
     /**
      * @param array $options This array must contain the following properties/index
      *                       'access_token'     : (required)
-     *                       'spreadsheet_name' : (require)
+     *                       'spreadsheet_name' : (required) The exact title of the spreadsheet
+     *                       'comment_symbol'   : (optional) By default it will be '#'
      *
      */
     public function __construct($options=array())
@@ -49,12 +57,21 @@ class Exporter
         );
     }
 
+    /**
+     * Gets the current worksheets and processes the desired ones into specific file outputs
+     * @param array $workSheets The list of worksheets to process. The names must match exactly.
+     * @param class $transformer
+     * @param class $writer
+     * @throws ExporterException
+     */
     public function processWorksheets($workSheets, $transformer, $writer)
     {
-
-
         foreach($workSheets AS $workSheetName) {
             $worksheet = $this->worksheetFeed->getByTitle($workSheetName);
+            if (is_null($worksheet)) {
+                throw new ExporterException("No worksheet called '{$workSheetName}' was found!");
+            }
+
             $listFeed = $worksheet->getListFeed();
 
             $dataRows = $this->getRows($listFeed);
@@ -64,12 +81,16 @@ class Exporter
         }
     }
 
-    public function getRows($listFeed)
+    /**
+     * @param \Google\Spreadsheet\ListFeed $listFeed
+     * @return array
+     */
+    protected function getRows($listFeed)
     {
         $dataRows = array();
         foreach ($listFeed->getEntries() as $entry) {
             $row = $entry->getValues();
-            if ($row['category'] == '#') {
+            if ($this->isCommentRow($row)) {
                 continue;
             }
             $dataRows[] = $row;
@@ -78,7 +99,48 @@ class Exporter
         return $dataRows;
     }
 
-    public function getWorksheets($accessToken, $spreadsheetTitle)
+    /**
+     * @param $rowData
+     * @return bool
+     */
+    protected function isCommentRow($rowData)
+    {
+        reset($rowData);
+        $valueFirstColumn = current($rowData);
+        return ($valueFirstColumn == $this->options['comment_symbol']);
+    }
+
+    /**
+     * Check if worksheets were found based on a given spreadsheet of this instance
+     * @return bool
+     */
+    protected function isWorksheetsFromSpreadsheetFound()
+    {
+        return $this->worksheetFeed !== null;
+    }
+
+    /**
+     * Sets the worksheets based on a given spreadsheet and access token.
+     * If the spreadsheet is not found, then the `worksheetFeed` property will be null
+     */
+    public function setWorksheets()
+    {
+        $this->worksheetFeed = $this->getWorksheets(
+            $this->options['access_token'],
+            $this->options['spreadsheet_name']
+        );
+
+        if (!$this->isWorksheetsFromSpreadsheetFound()) {
+            throw new ExporterException("No spreadsheet called '{$this->options['spreadsheet_name']}' found!");
+        }
+    }
+
+    /**
+     * @param string $accessToken The access token
+     * @param string $spreadsheetTitle The exact title of the spreadsheet
+     * @return null|\Google\Spreadsheet\WorksheetFeed
+     */
+    protected function getWorksheets($accessToken, $spreadsheetTitle)
     {
         $serviceRequest = new \Google\Spreadsheet\DefaultServiceRequest($accessToken);
         ServiceRequestFactory::setInstance($serviceRequest);
@@ -86,8 +148,11 @@ class Exporter
         $spreadsheetService = new \Google\Spreadsheet\SpreadsheetService();
         $spreadsheetFeed = $spreadsheetService->getSpreadsheets();
 
-
         $spreadsheet = $spreadsheetFeed->getByTitle($spreadsheetTitle);
+        if (!$spreadsheet || $spreadsheet === null) {
+            return null;
+        }
+
         $worksheetFeed = $spreadsheet->getWorksheets();
 
         return $worksheetFeed;

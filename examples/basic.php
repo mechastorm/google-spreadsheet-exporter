@@ -26,13 +26,16 @@ echo 'Service Account Access Token: ' . $accessToken;
 
 $gSSExporter = new Exporter(array(
     'access_token' => $accessToken,
-    'spreadsheet_name' => 'name_of_spreadsheet'
+    'spreadsheet_name' => 'google-spreadsheet-exporter Sample Spreadsheet' // Must Match Exactly
 ));
+$gSSExporter->setWorksheets();
 
 $transformer = new LocalePhpArray(array(
     'locales' => array(
-        'en_US', // Must match the columns on the spreadsheet
         'en_GB', // Must match the columns on the spreadsheet
+        'fr_CA',
+        'my_MY',
+        'ja_JP',
     ),
 ));
 $outputFolder = '../output';
@@ -44,7 +47,7 @@ $writer = new LangPhpWriter(array(
 
 $gSSExporter->processWorksheets(
     array(
-        'name_of_worksheet',
+        'Web Copy', // Must match exactly!
     ),
     $transformer,
     $writer
