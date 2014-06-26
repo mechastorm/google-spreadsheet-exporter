@@ -1,5 +1,6 @@
 {
     "name": "mechastorm/google-spreadsheet-exporter",
+    "license": "Apache-2.0",
     "require": {
         "google/apiclient": "1.0.*@beta",
         "asimlqt/php-google-spreadsheet-client": "2.1.*"
